@@ -1,0 +1,22 @@
+{
+  "name": "homework",
+  "version": "1.0.0",
+  "description": "Hello world new project template.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/minhnguyen22698/homework.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/minhnguyen22698/homework/issues"
+  },
+  "homepage": "https://github.com/minhnguyen22698/homework#readme",
+  "dependencies": {
+    "events": "^3.3.0"
+  }
+}
