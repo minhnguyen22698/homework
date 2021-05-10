@@ -29,14 +29,15 @@ cc.Class({
       default: null,
       type: cc.RichText,
     },
+    _isValid:false,
   },
   // LIFE-CYCLE CALLBACKS:
   onLoad() {
-    // Emitter.instance = new Emitter();
     // Emitter.instance.registerEvent('sign-up',this.onShowNoti.bind(this))
     Emitter.instance.registerEvent("show-noti", this.onShowNoti.bind(this));
     Emitter.instance.registerEvent("edit-end", this.onEditEnd.bind(this));
     Emitter.instance.registerEvent("show-label", this.onShowLabel.bind(this));
+    Emitter.instance.registerEvent("stopResgiter",this.onStopRegister.bind(this))
     this.enough.node.active = false;
   },
   onEditEnd(arg, str) {
@@ -47,19 +48,32 @@ cc.Class({
       } else {
         this.password.string = "Password invalid: contains special characters";
       }
+      this._isValid=false
     } else {
-      if (arg.node.name == "username") {
-        this.username.node.active = false;
-      } else {
+      if(valid.passwordValid(str)!="" && arg.node.name=="password") {
         this.password.string = valid.passwordValid(str);
+      }
+      else{
+        this._isValid=true
+        this.password.node.active=false
       }
     }
   },
+  onStopRegister(){
+    this.enough.node.active=true
+    Emitter.instance.emit('hideEditBox')
+  },
   onShowNoti(arg) {
-    var date = new Date();
-    var timestamp =
-      date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-    this.noti.string = `Chào mừng <b><color=fff000><u>${arg}</u></color></b> đã gia nhập lúc <i><color=fcba03>${timestamp}</color></i>`;
+    if(this._isValid)
+    {
+      var date = new Date();
+      var timestamp =
+        date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+      var item = arg +' : '+timestamp;
+      this.noti.string = `Chào mừng <b><color=fff000><u>${arg}</u></color></b> đã gia nhập lúc <i><color=fcba03>${timestamp}</color></i>`;
+      Emitter.instance.emit('addItem',item)
+    }
+  
   },
   onShowLabel(arg) {
     if (arg == "username") {

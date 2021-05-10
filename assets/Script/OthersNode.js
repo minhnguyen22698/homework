@@ -20,20 +20,40 @@ cc.Class({
       default: null,
       type: cc.Button,
     },
+    progressBar: {
+      default: null,
+      type: cc.ProgressBar,
+    },
+    account:{
+      default:null,
+      type:cc.Prefab,
+    },
+    _index:0
   },
 
   // LIFE-CYCLE CALLBACKS:
 
   onLoad() {
     //  this.accountList.node.active = false;
+    Emitter.instance.registerEvent('addItem', this.onAddItem.bind(this));
     this.btnSignUp.node.on("click", this.onSignUp.bind(this));
   },
+  onAddItem(info) {
+      var item = new cc.instantiate(this.account)
+      item.getComponent(cc.Label).string = info;
+      item.y -= 30 * this._index++;
+      this.progressBar.progress+=1/8
+      this.accountList.content.addChild(item)
+      if(this.progressBar.progress==1){
+        this.btnSignUp.node.active=false
+        Emitter.instance.emit('stopResgiter')
+      }  
+  },
   onSignUp() {
-    cc.log(Emitter.instance)
     Emitter.instance.emit('sign-up')
   },
 
-  start() {},
+  start() { },
 
   // update (dt) {},
 });

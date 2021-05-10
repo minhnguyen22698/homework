@@ -17,7 +17,12 @@ cc.Class({
 
   onLoad() {  
     Emitter.instance = new Emitter();
+    Emitter.instance.registerEvent('hideEditBox',this.onHideEdit.bind(this))
     Emitter.instance.registerEvent('sign-up',this.onSignUp.bind(this))
+  },
+  onHideEdit(){
+    this.username.node.active=false
+    this.password.node.active=false
   },
   onSignUp(){
     Emitter.instance.emit('show-noti',this.username.string)
