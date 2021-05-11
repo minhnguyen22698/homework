@@ -50,12 +50,14 @@ cc.Class({
       }
       this._isValid=false
     } else {
-      if(valid.passwordValid(str)!="" && arg.node.name=="password") {
+      this.username.node.active=false
+      if(valid.passwordValid(str)!="") {
         this.password.string = valid.passwordValid(str);
       }
       else{
         this._isValid=true
         this.password.node.active=false
+        
       }
     }
   },
@@ -77,17 +79,13 @@ cc.Class({
   },
   onShowLabel(arg) {
     if (arg == "username") {
-      this.username.string =
-        "Username cannot over 10 characters and includes special characters";
+      this.username.string ="Username cannot over 10 characters and includes special characters";
       this.username.node.active = true;
       this.password.node.active = false;
-      // this.listView.node.active = false
-      // cc.log(this.username)
     } else {
       this.password.string = "Input password here and don`t forget it :3";
       this.username.node.active = false;
       this.password.node.active = true;
-      // this.listView.node.active = false
     }
   },
   start() {},

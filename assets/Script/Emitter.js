@@ -20,7 +20,7 @@ class mEmitter {
     destroy(){
         this._emitter.removeAllListeners();
         this._emitter=null;
-        mEmitter.instance=null
+        mEmitter.instance=null;
     }
 }
 mEmitter.instance=null
